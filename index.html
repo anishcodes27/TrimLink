@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrimLink | Modern URL Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="min-h-screen flex flex-col antialiased bg-slate-900 text-slate-50 relative selection:bg-indigo-500/30 selection:text-indigo-200">
+
+    <!-- Navigation -->
+    <nav class="w-full p-6 flex justify-between items-center max-w-7xl mx-auto z-10 relative">
+        <div class="flex items-center gap-2">
+            <svg class="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+            <span class="text-2xl font-bold tracking-tight text-white">Trim<span class="text-indigo-500">Link</span></span>
+        </div>
+        <a href="dashboard.html" class="text-sm font-semibold text-slate-400 hover:text-white transition-colors">Dashboard &rarr;</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center px-4 sm:px-6 z-10 relative mt-8 mb-16">
+        
+        <!-- Hero Section -->
+        <div class="text-center max-w-3xl mb-10">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-white">
+                Shorten your links, <br />
+                <span class="text-indigo-500">expand your reach.</span>
+            </h1>
+            <p class="text-lg text-slate-400 mb-8 max-w-2xl mx-auto font-medium">
+                A simple, fast, and reliable URL shortener. Transform long, unwieldy links into clean, trackable URLs in seconds.
+            </p>
+        </div>
+
+        <!-- Clean Dark Card for Form -->
+        <div class="bg-slate-800 border border-slate-700 shadow-xl w-full max-w-2xl p-8 rounded-2xl">
+            <form id="shorten-form" class="flex flex-col sm:flex-row gap-4">
+                <div class="relative flex-grow">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    </div>
+                    <input type="url" id="url-input" name="url" required 
+                           placeholder="Paste your long URL here..." 
+                           class="w-full bg-slate-900 border border-slate-700 text-white transition-all duration-200 rounded-xl py-4 pl-12 pr-4 text-base placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-inner">
+                </div>
+                <button type="submit" id="submit-btn" 
+                        class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-4 px-8 rounded-xl shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900 flex items-center justify-center min-w-[140px]">
+                    <span id="btn-text">Shorten</span>
+                    <svg id="btn-spinner" class="animate-spin hidden w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </button>
+            </form>
+
+            <!-- Result Area (Hidden by default) -->
+            <div id="result-container" class="hidden mt-6 p-5 bg-slate-900/50 rounded-xl border border-slate-700 transition-all duration-200">
+                <p class="text-sm font-medium text-slate-400 mb-2">Your shortened link:</p>
+                <div class="flex items-center gap-3">
+                    <input type="text" id="short-url-display" readonly 
+                           class="w-full bg-transparent border-none text-indigo-400 font-semibold text-lg focus:ring-0 p-0 cursor-copy selection:bg-indigo-500/30">
+                    <button type="button" class="copy-btn flex items-center justify-center p-2 rounded-lg bg-slate-800 border border-slate-700 shadow-sm hover:bg-slate-700 hover:text-indigo-400 transition-colors text-slate-400" data-target="short-url-display" title="Copy to clipboard">
+                        <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-8 border-t border-slate-800 text-center text-slate-500 text-sm mt-auto">
+        <p>&copy; <span id="current-year"></span> TrimLink. Built for learning.</p>
+    </footer>
+
+    <script src="assets/app.js"></script>
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
