@@ -1,24 +1,9 @@
 {
   "functions": {
-    "api.php": { "runtime": "vercel-php@0.6.2" },
-    "redirect.php": { "runtime": "vercel-php@0.6.2" }
+    "api/*.php": { "runtime": "vercel-php@0.6.2" }
   },
-  "routes": [
-    {
-      "src": "/api.php",
-      "dest": "/api.php"
-    },
-    {
-      "src": "/redirect.php",
-      "dest": "/redirect.php"
-    },
-    {
-      "src": "/(.*)\\.html",
-      "dest": "/$1.html"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    }
+  "rewrites": [
+    { "source": "/r/:code", "destination": "/api/redirect.php?c=:code" },
+    { "source": "/api/(.*)", "destination": "/api/$1" }
   ]
 }

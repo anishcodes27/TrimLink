@@ -54,10 +54,9 @@ function generateShortCode($length = 6) {
     return $randomString;
 }
 
-// Base URL for the application (e.g., http://localhost/url_shorten/)
-// In a real app, you might want to dynamically generate this or define it statically.
+// Base URL — just protocol + host, no subfolder path needed.
+// Works correctly for both local (localhost:8000) and Vercel (trimlink.vercel.app)
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $domainName = $_SERVER['HTTP_HOST'];
-$basePath = dirname($_SERVER['PHP_SELF']) == '/' || dirname($_SERVER['PHP_SELF']) == '\\' ? '' : dirname($_SERVER['PHP_SELF']);
-define('BASE_URL', $protocol . $domainName . $basePath);
+define('BASE_URL', $protocol . $domainName);
 ?>

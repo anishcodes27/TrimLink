@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnSpinner.classList.remove('hidden');
                 submitBtn.disabled = true;
 
-                // Point to new api.php instead of index.php
-                const response = await fetch('api.php', {
+                // Point to new api/index.php instead of index.php
+                const response = await fetch('api/index.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `action=shorten&url=${encodeURIComponent(originalUrl)}`
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const row = form.closest('tr');
 
                 try {
-                    const response = await fetch('api.php', {
+                    const response = await fetch('api/index.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         body: `action=delete&id=${id}`
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!tbody) return; // not on dashboard page
 
         try {
-            const response = await fetch('api.php?action=get_dashboard');
+            const response = await fetch('api/index.php?action=get_dashboard');
             const data = await response.json();
 
             if (data.success) {
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const baseUrl = window.location.origin + window.location.pathname.replace('dashboard.html', '');
                     
                     data.urls.forEach(url => {
-                        const shortUrlFull = `${baseUrl}redirect.php?c=${url.short_code}`;
+                        const shortUrlFull = `${baseUrl}r/${url.short_code}`;
                         const dateObj = new Date(url.created_at);
                         const formattedDate = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 

@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../config.php';
 header('Content-Type: application/json');
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
@@ -29,7 +29,7 @@ if ($action === 'shorten' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$original_url, $short_code]);
         }
 
-        $short_url = BASE_URL . '/redirect.php?c=' . $short_code;
+        $short_url = BASE_URL . '/r/' . $short_code;
         echo json_encode(['success' => true, 'short_url' => $short_url]);
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Database error.']);
