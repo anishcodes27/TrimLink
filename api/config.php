@@ -40,11 +40,12 @@ try {
     }
 
     $host = getEnvSafe('DB_HOST', '127.0.0.1');
+    $port = getEnvSafe('DB_PORT', '3306');
     $dbname = getEnvSafe('DB_NAME', 'trimlink');
     $user = getEnvSafe('DB_USER', 'root');
     $pass = getEnvSafe('DB_PASS', '');
 
-    $pdo = new PDO("mysql:host=" . $host . ";dbname=" . $dbname, $user, $pass);
+    $pdo = new PDO("mysql:host=" . $host . ";port=" . $port . ";dbname=" . $dbname, $user, $pass);
     // Set PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
