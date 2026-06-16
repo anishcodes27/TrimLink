@@ -1,11 +1,30 @@
 <?php
 require_once '../config.php';
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// Parse JSON body sent by fetch() with Content-Type: application/json
+$rawBody = file_get_contents('php://input');
+if (!empty($rawBody)) {
+    $jsonData = json_decode($rawBody, true);
+    if (is_array($jsonData)) {
+        $_REQUEST = array_merge($_REQUEST, $jsonData);
+        $_POST    = array_merge($_POST,    $jsonData);
+    }
+}
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
 
 if ($action === 'shorten' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $original_url = filter_input(INPUT_POST, 'url', FILTER_SANITIZE_URL);
+    $original_url = isset($_POST['url']) ? filter_var($_POST['url'], FILTER_SANITIZE_URL) : '';
     if (empty($original_url) || !filter_var($original_url, FILTER_VALIDATE_URL)) {
         echo json_encode(['success' => false, 'message' => 'Please enter a valid URL.']);
         exit;
@@ -65,7 +84,7 @@ if ($action === 'get_dashboard') {
 }
 
 if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    $id = isset($_POST['id']) ? filter_var($_POST['id'], FILTER_VALIDATE_INT) : false;
     if (!$id) {
         echo json_encode(['success' => false, 'message' => 'Invalid ID provided.']);
         exit;

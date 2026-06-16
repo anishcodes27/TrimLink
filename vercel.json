@@ -5,6 +5,7 @@
   },
   "rewrites": [
     { "source": "/r/:code", "destination": "/api/redirect.php?c=:code" },
+    { "source": "/api", "destination": "/api/index.php" },
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ],
   "headers": [
