@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node api/index.js",
     "build:css": "npx @tailwindcss/cli -i ./assets/input.css -o ./assets/style.css --minify",
-    "build": "npm run build:css",
     "watch:css": "npx @tailwindcss/cli -i ./assets/input.css -o ./assets/style.css --watch"
   },
   "dependencies": {
