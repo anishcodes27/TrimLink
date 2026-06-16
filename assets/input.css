@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@source "../*.html";
+@source "../assets/*.js";
+
+/* Font family override */
+@layer base {
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+/* ============================================
+   Custom Styles
+   ============================================ */
+
+/* Custom Scrollbar for Webkit */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Toast Notifications */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateX(120%);
+    animation: slideIn 0.3s forwards, slideOut 0.3s 3s forwards;
+}
+
+.toast-success { background: linear-gradient(to right, #10b981, #059669); }
+.toast-error { background: linear-gradient(to right, #ef4444, #dc2626); }
+
+@keyframes slideIn {
+    to { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+    to { transform: translateX(120%); }
+}

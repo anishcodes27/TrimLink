@@ -11,5 +11,4 @@ Thumbs.db
 # Node.js dependencies
 node_modules/
 
-# Tailwind source (only the built style.css is needed)
-assets/input.css
+
