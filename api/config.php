@@ -30,16 +30,24 @@ loadEnv(__DIR__ . '/.env');
 
 // Establish PDO connection using environment variables
 try {
-    $host = $_ENV['DB_HOST'] ?? '127.0.0.1';
-    $dbname = $_ENV['DB_NAME'] ?? 'trimlink';
-    $user = $_ENV['DB_USER'] ?? 'root';
-    $pass = $_ENV['DB_PASS'] ?? '';
+    // Vercel populates getenv() and $_SERVER reliably
+    function getEnvSafe($key, $default) {
+        $val = getenv($key);
+        if ($val !== false && $val !== '') return $val;
+        if (isset($_ENV[$key]) && $_ENV[$key] !== '') return $_ENV[$key];
+        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
+        return $default;
+    }
+
+    $host = getEnvSafe('DB_HOST', '127.0.0.1');
+    $dbname = getEnvSafe('DB_NAME', 'trimlink');
+    $user = getEnvSafe('DB_USER', 'root');
+    $pass = getEnvSafe('DB_PASS', '');
 
     $pdo = new PDO("mysql:host=" . $host . ";dbname=" . $dbname, $user, $pass);
     // Set PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    // For a fresher: We catch the error so it doesn't leak sensitive info, and display a user-friendly message.
     die("ERROR: Could not connect to the database. " . $e->getMessage());
 }
 
