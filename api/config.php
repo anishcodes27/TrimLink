@@ -48,6 +48,16 @@ try {
     $pdo = new PDO("mysql:host=" . $host . ";port=" . $port . ";dbname=" . $dbname, $user, $pass);
     // Set PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Automatically create the urls table if it doesn't exist (perfect for new cloud databases)
+    $pdo->exec("CREATE TABLE IF NOT EXISTS urls (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        original_url VARCHAR(2048) NOT NULL,
+        short_code VARCHAR(50) NOT NULL UNIQUE,
+        clicks INT DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
+
 } catch (PDOException $e) {
     die("ERROR: Could not connect to the database. " . $e->getMessage());
 }
