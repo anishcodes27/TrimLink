@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once 'config.php';
 
 // Check if a short code is provided in the URL query string
 if (isset($_GET['c']) && !empty($_GET['c'])) {
