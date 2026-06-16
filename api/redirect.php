@@ -37,7 +37,6 @@ if (isset($_GET['c']) && !empty($_GET['c'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not Found - TrimLink</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body class="min-h-screen flex items-center justify-center flex-col text-center p-4">
